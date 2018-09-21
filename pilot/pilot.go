@@ -330,13 +330,16 @@ func (p *Pilot) newContainer(containerJSON *types.ContainerJSON) error {
 
 	container := container(containerJSON)
 
+	hasEnv := false
+
 	for _, e := range env {
 		for _, prefix := range p.logPrefix {
 			serviceLogs := fmt.Sprintf(ENV_SERVICE_LOGS_TEMPL, prefix)
 			if !strings.HasPrefix(e, serviceLogs) {
-				e = fmt.Sprintf("%s_logs_applog", prefix)
-				//continue
+				continue
 			}
+
+			hasEnv = true
 
 			envLabel := strings.SplitN(e, "=", 2)
 			if len(envLabel) == 2 {
@@ -344,6 +347,11 @@ func (p *Pilot) newContainer(containerJSON *types.ContainerJSON) error {
 				labels[labelKey] = envLabel[1]
 			}
 		}
+	}
+
+	if !hasEnv {
+		labelKey := fmt.Sprintf("%s.logs.%s", prefix, "applog")
+		labels[labelKey] = "stdout"
 	}
 
 	logConfigs, err := p.getLogConfigs(jsonLogPath, mounts, labels)
