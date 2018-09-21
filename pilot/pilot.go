@@ -350,7 +350,7 @@ func (p *Pilot) newContainer(containerJSON *types.ContainerJSON) error {
 	}
 
 	if !hasEnv {
-		labelKey := fmt.Sprintf("%s.logs.%s", prefix, "applog")
+		labelKey := fmt.Sprintf("%s.logs.%s", "default", "applog")
 		labels[labelKey] = "stdout"
 	}
 
