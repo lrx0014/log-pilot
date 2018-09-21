@@ -334,7 +334,8 @@ func (p *Pilot) newContainer(containerJSON *types.ContainerJSON) error {
 		for _, prefix := range p.logPrefix {
 			serviceLogs := fmt.Sprintf(ENV_SERVICE_LOGS_TEMPL, prefix)
 			if !strings.HasPrefix(e, serviceLogs) {
-				continue
+				e = fmt.Sprintf("%s_logs_applog", prefix)
+				//continue
 			}
 
 			envLabel := strings.SplitN(e, "=", 2)
