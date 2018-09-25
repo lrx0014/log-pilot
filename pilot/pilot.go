@@ -330,30 +330,8 @@ func (p *Pilot) newContainer(containerJSON *types.ContainerJSON) error {
 
 	container := container(containerJSON)
 
-	hasEnv := false
-
-	for _, e := range env {
-		for _, prefix := range p.logPrefix {
-			serviceLogs := fmt.Sprintf(ENV_SERVICE_LOGS_TEMPL, prefix)
-			if !strings.HasPrefix(e, serviceLogs) {
-				continue
-			}
-
-			hasEnv = true
-
-			envLabel := strings.SplitN(e, "=", 2)
-			if len(envLabel) == 2 {
-				labelKey := strings.Replace(envLabel[0], "_", ".", -1)
-				labels[labelKey] = envLabel[1]
-			}
-		}
-	}
-
-	if !hasEnv {
-		log.Info("no Env found, use default")
-		labelKey := fmt.Sprintf("%s.logs.%s", "daocloud", "applog")
-		labels[labelKey] = "stdout"
-	}
+	labelKey := fmt.Sprintf("%s.logs.%s", os.Getenv(ENV_PILOT_LOG_PREFIX), "logs")
+	labels[labelKey] = "stdout"
 
 	logConfigs, err := p.getLogConfigs(jsonLogPath, mounts, labels)
 	if err != nil {
@@ -586,7 +564,7 @@ func (p *Pilot) parseLogConfig(name string, info *LogInfoNode, jsonLogPath strin
 
 	if formatConfig["time_key"] == "" {
 		cfg.EstimateTime = true
-		cfg.FormatConfig["time_key"] = "_timestamp"
+		cfg.FormatConfig["time_key"] = "@timestamp"
 	}
 	return cfg, nil
 }
