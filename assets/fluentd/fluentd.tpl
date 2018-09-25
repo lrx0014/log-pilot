@@ -10,7 +10,7 @@
   {{else}}
   @type {{ .Format }}
   {{end}}
-  {{ $time_key := "" }}
+  {{ $time_key := "@timestamp" }}
   {{if .FormatConfig}}
   {{range $key, $value := .FormatConfig}}
   {{ $key }} {{ $value }}
