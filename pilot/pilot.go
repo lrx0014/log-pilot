@@ -317,7 +317,6 @@ func (p *Pilot) newContainer(containerJSON *types.ContainerJSON) error {
 	jsonLogPath := containerJSON.LogPath
 	mounts := containerJSON.Mounts
 	labels := containerJSON.Config.Labels
-	env := containerJSON.Config.Env
 
 	//logConfig.containerDir match types.mountPoint
 	/**
