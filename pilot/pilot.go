@@ -350,7 +350,8 @@ func (p *Pilot) newContainer(containerJSON *types.ContainerJSON) error {
 	}
 
 	if !hasEnv {
-		labelKey := fmt.Sprintf("%s.logs.%s", "default", "applog")
+		log.Info("no Env found, use default")
+		labelKey := fmt.Sprintf("%s.logs.%s", "daocloud", "applog")
 		labels[labelKey] = "stdout"
 	}
 
