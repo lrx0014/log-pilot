@@ -562,7 +562,7 @@ func (p *Pilot) parseLogConfig(name string, info *LogInfoNode, jsonLogPath strin
 	}
 
 	//if formatConfig["time_key"] == "" {
-	cfg.EstimateTime = true
+	cfg.EstimateTime = false
 	cfg.FormatConfig["time_key"] = "@timestamp"
 	//}
 	return cfg, nil
