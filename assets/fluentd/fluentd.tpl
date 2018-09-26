@@ -30,7 +30,7 @@
   @type record_transformer
   enable_ruby true
   <record>
-    @timestamp ${time_stamp}
+    logstash_format true
     host "#{Socket.gethostname}"
     {{range $key, $value := .Tags}}
     {{ $key }} {{ $value }}
