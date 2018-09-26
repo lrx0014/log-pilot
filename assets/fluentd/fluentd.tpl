@@ -10,7 +10,7 @@
   {{else}}
   @type {{ .Format }}
   {{end}}
-  {{ $time_key := "@timestamp" }}
+  {{ $time_key := "" }}
   {{if .FormatConfig}}
   {{range $key, $value := .FormatConfig}}
   {{ $key }} {{ $value }}
@@ -25,6 +25,11 @@
   read_from_head true
   pos_file /pilot/pos/{{ $.containerId }}.{{ .Name }}.pos
 </source>
+
+<filter docker.{{ $.containerId }}.{{ .Name }}>
+@type add_time
+time_key @timestamp
+</filter>
 
 <filter docker.{{ $.containerId }}.{{ .Name }}>
   @type record_transformer
