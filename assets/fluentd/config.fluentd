@@ -84,6 +84,7 @@ ${ELASTICSEARCH_SCHEME:+scheme ${ELASTICSEARCH_SCHEME}}
 ${ELASTICSEARCH_SSL_VERIFY:+ssl_verify ${ELASTICSEARCH_SSL_VERIFY}}
 target_index_key _target
 type_name fluentd
+logstash_format true
 $(bufferd_output)
 </match>
 EOF
